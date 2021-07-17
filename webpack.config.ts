@@ -16,9 +16,6 @@ const configFactory = (
 ): Configuration => {
   process.env.NODE_ENV = "development"
 
-  // ==================
-  // Rule definitions
-  // ==================
   const babelRule: RuleSetRule = {
     test: /\.(js|jsx|ts|tsx)$/,
     use: {
@@ -62,15 +59,13 @@ const configFactory = (
       chunkFilename: "js/[name].[contenthash].chunk.js",
       filename: "js/[name].[contenthash].js",
       path: outputPath,
-      publicPath: "/", // Ensures all assets are resolved relative to the root
+      publicPath: "/",
       sourceMapFilename: "[file].map[query]",
     },
-    plugins: [
-      htmlPlugin, // has to precede pwaManifestPlugin to have manifest injected
-    ],
+    plugins: [htmlPlugin],
     resolve: {
       alias: {
-        "react-native$": "react-native-web", // For node modules that import react-native
+        "react-native$": "react-native-web",
       },
       extensions: appFileExtensions.concat([
         ".web.tsx",
