@@ -1,8 +1,7 @@
 import HtmlPlugin from "html-webpack-plugin"
-import  path from "path"
-import { Configuration,  RuleSetRule} from "webpack"
+import path from "path"
+import { Configuration, RuleSetRule } from "webpack"
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server"
-
 
 const ROOT_PATH = __dirname
 const outputPath = path.join(ROOT_PATH)
@@ -15,9 +14,7 @@ const configFactory = (
   _argv: unknown,
   appFileExtensions: string[] = [],
 ): Configuration => {
-
-    process.env.NODE_ENV =  "development"
-
+  process.env.NODE_ENV = "development"
 
   // ==================
   // Rule definitions
@@ -33,6 +30,14 @@ const configFactory = (
     },
   }
 
+  const imagesRule: RuleSetRule = {
+    generator: {
+      filename: "images/[name].[hash][ext][query]",
+    },
+    test: /\.(?:gif|ico|jpeg|jpg|png|svg)$/,
+    type: "asset/resource",
+  }
+
   const htmlPlugin = new HtmlPlugin({
     template: path.join(ROOT_PATH, "src/index.ejs"),
     templateParameters: {
@@ -41,7 +46,6 @@ const configFactory = (
     },
   })
 
-
   const config: Configuration & { devServer: WebpackDevServerConfiguration } = {
     devServer: {
       compress: true,
@@ -49,10 +53,10 @@ const configFactory = (
       host: "0.0.0.0",
       hot: true,
     },
-    devtool: "source-map" ,
+    devtool: "source-map",
     entry: ROOT_PATH,
     module: {
-      rules: [babelRule],
+      rules: [babelRule, imagesRule],
     },
     output: {
       chunkFilename: "js/[name].[contenthash].chunk.js",
@@ -76,9 +80,12 @@ const configFactory = (
         ".web.js",
         ".web.jsx",
         ".js",
-        ".jsx"
+        ".jsx",
       ]),
-      modules: [path.join(ROOT_PATH, "src"), path.join(ROOT_PATH, "node_modules")],
+      modules: [
+        path.join(ROOT_PATH, "src"),
+        path.join(ROOT_PATH, "node_modules"),
+      ],
     },
   }
 
