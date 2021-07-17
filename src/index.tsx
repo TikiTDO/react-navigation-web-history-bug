@@ -51,17 +51,19 @@ const SecondScreen: React.FC = () => {
   }, [])
 
   return (
-    <div style={{ display: "flex" }}>
-      <button onClick={handleNavigate} style={{ margin: "auto" }}>
-        Nav Within Second: Click this a bunch of times
-      </button>
-      <button onClick={handleBack} style={{ margin: "auto" }}>
-        BackButton: Click this after clicking the other button a few times
-      </button>
-      <span>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <span style={{ margin: "auto" }}>
         Bug: No matter what you do within the SecondScreen clicking back will
         always take you back to the first screen.
       </span>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <button onClick={handleNavigate} style={{ margin: "auto" }}>
+          Nav Within Second: Click this a bunch of times
+        </button>
+        <button onClick={handleBack} style={{ margin: "auto" }}>
+          BackButton: Click this after clicking the other button a few times
+        </button>
+      </div>
     </div>
   )
 }
