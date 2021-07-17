@@ -1,0 +1,5 @@
+**/node_modules
+
+# Mac/Linux finder artifacts
+.DS_Store
+.directory
